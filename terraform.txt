@@ -1,0 +1,936 @@
+Using username "ubuntu".
+Authenticating with public key "imported-openssh-key"
+Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-1045-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Tue May 11 06:50:08 UTC 2021
+
+  System load:  0.0               Processes:             110
+  Usage of /:   25.4% of 7.69GB   Users logged in:       1
+  Memory usage: 29%               IPv4 address for eth0: 172.31.2.36
+  Swap usage:   0%
+
+ * Pure upstream Kubernetes 1.21, smallest, simplest cluster ops!
+
+     https://microk8s.io/
+
+19 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+*** System restart required ***
+Last login: Tue May 11 06:38:46 2021 from 49.207.83.172
+ubuntu@ip-172-31-2-36:~$ sudo du - root
+du: cannot access '-': No such file or directory
+du: cannot access 'root': No such file or directory
+ubuntu@ip-172-31-2-36:~$ sudo su - root
+root@ip-172-31-2-36:~# aws --version
+aws-cli/1.18.69 Python/3.8.5 Linux/5.4.0-1045-aws botocore/1.16.19
+root@ip-172-31-2-36:~# apt-get update
+Hit:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal InRelease
+Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal-updates InRelease
+Hit:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu focal-security InRelease
+Reading package lists... Done
+root@ip-172-31-2-36:~# wget "https://releases.hashicorp.com/terraform/0.15.3/ter              raform_0.15.3_linux_amd64.zip"
+--2021-05-11 06:51:15--  https://releases.hashicorp.com/terraform/0.15.3/terrafo              rm_0.15.3_linux_amd64.zip
+Resolving releases.hashicorp.com (releases.hashicorp.com)... 151.101.249.183, 2a              04:4e42:2f::439
+Connecting to releases.hashicorp.com (releases.hashicorp.com)|151.101.249.183|:4              43... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 32743141 (31M) [application/zip]
+Saving to: ‘terraform_0.15.3_linux_amd64.zip’
+
+terraform_0.15.3_li 100%[===================>]  31.23M  62.2MB/s    in 0.5s
+
+2021-05-11 06:51:15 (62.2 MB/s) - ‘terraform_0.15.3_linux_amd64.zip’ saved [3274              3141/32743141]
+
+root@ip-172-31-2-36:~# tar -xzvf ^C
+root@ip-172-31-2-36:~# tar -xzvf terraform_0.15.3_linux_amd64.zip
+tar: This does not look like a tar archive
+tar: Skipping to next header
+tar: Exiting with failure status due to previous errors
+root@ip-172-31-2-36:~# unzip terraform_0.15.3_linux_amd64.zip
+
+Command 'unzip' not found, but can be installed with:
+
+apt install unzip
+
+root@ip-172-31-2-36:~# apt install unzip
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Suggested packages:
+  zip
+The following NEW packages will be installed:
+  unzip
+0 upgraded, 1 newly installed, 0 to remove and 15 not upgraded.
+Need to get 169 kB of archives.
+After this operation, 593 kB of additional disk space will be used.
+Get:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal/main amd64 unzip amd6              4 6.0-25ubuntu1 [169 kB]
+Fetched 169 kB in 0s (12.0 MB/s)
+Selecting previously unselected package unzip.
+(Reading database ... 98060 files and directories currently installed.)
+Preparing to unpack .../unzip_6.0-25ubuntu1_amd64.deb ...
+Unpacking unzip (6.0-25ubuntu1) ...
+Setting up unzip (6.0-25ubuntu1) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Processing triggers for man-db (2.9.1-1) ...
+root@ip-172-31-2-36:~# unzip terraform_0.15.3_linux_amd64.zip
+Archive:  terraform_0.15.3_linux_amd64.zip
+  inflating: terraform
+root@ip-172-31-2-36:~# ls
+snap  terraform  terraform_0.15.3_linux_amd64.zip  usercreate  usercreate.sh
+root@ip-172-31-2-36:~# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/loc              al/games:/snap/bin
+root@ip-172-31-2-36:~# mv ~terraform /usr/local/bin/
+mv: cannot stat '~terraform': No such file or directory
+root@ip-172-31-2-36:~# mv ~/terraform /usr/local/bin/
+root@ip-172-31-2-36:~# mv ~terraform /usr/local/bin/
+mv: cannot stat '~terraform': No such file or directory
+root@ip-172-31-2-36:~# mv terraform /usr/local/bin/
+mv: cannot stat 'terraform': No such file or directory
+root@ip-172-31-2-36:~# ls
+snap  terraform_0.15.3_linux_amd64.zip  usercreate  usercreate.sh
+root@ip-172-31-2-36:~# ls /usr/local/bin
+terraform
+root@ip-172-31-2-36:~# terraform --help
+Usage: terraform [global options] <subcommand> [args]
+
+The available commands for execution are listed below.
+The primary workflow commands are given first, followed by
+less common or more advanced commands.
+
+Main commands:
+  init          Prepare your working directory for other commands
+  validate      Check whether the configuration is valid
+  plan          Show changes required by the current configuration
+  apply         Create or update infrastructure
+  destroy       Destroy previously-created infrastructure
+
+All other commands:
+  console       Try Terraform expressions at an interactive command prompt
+  fmt           Reformat your configuration in the standard style
+  force-unlock  Release a stuck lock on the current workspace
+  get           Install or upgrade remote Terraform modules
+  graph         Generate a Graphviz graph of the steps in an operation
+  import        Associate existing infrastructure with a Terraform resource
+  login         Obtain and save credentials for a remote host
+  logout        Remove locally-stored credentials for a remote host
+  output        Show output values from your root module
+  providers     Show the providers required for this configuration
+  refresh       Update the state to match remote systems
+  show          Show the current state or a saved plan
+  state         Advanced state management
+  taint         Mark a resource instance as not fully functional
+  test          Experimental support for module integration testing
+  untaint       Remove the 'tainted' state from a resource instance
+  version       Show the current Terraform version
+  workspace     Workspace management
+
+Global options (use these before the subcommand, if any):
+  -chdir=DIR    Switch to a different working directory before executing the
+                given subcommand.
+  -help         Show this help output, or the help for a specified subcommand.
+  -version      An alias for the "version" subcommand.
+root@ip-172-31-2-36:~# terraform -help plan
+Usage: terraform [global options] plan [options]
+
+  Generates a speculative execution plan, showing what actions Terraform
+  would take to apply the current configuration. This command will not
+  actually perform the planned actions.
+
+  You can optionally save the plan to a file, which you can then pass to
+  the "apply" command to perform exactly the actions described in the plan.
+
+Plan Customization Options:
+
+  The following options customize how Terraform will produce its plan. You
+  can also use these options when you run "terraform apply" without passing
+  it a saved plan, in order to plan and apply in a single command.
+
+  -destroy            If set, a plan will be generated to destroy all resources
+                      managed by the given configuration and state.
+
+  -refresh=false      Skip checking for changes to remote objects while
+                      creating the plan. This can potentially make planning
+                      faster, but at the expense of possibly planning against
+                      a stale record of the remote system state.
+
+  -replace=resource   Force replacement of a particular resource instance using
+                      its resource address. If the plan would've normally
+                      produced an update or no-op action for this instance,
+                      Terraform will plan to replace it instead.
+
+  -target=resource    Limit the planning operation to only the given module,
+                      resource, or resource instance and all of its
+                      dependencies. You can use this option multiple times to
+                      include more than one object. This is for exceptional
+                      use only.
+
+  -var 'foo=bar'      Set a variable in the Terraform configuration. This
+                      flag can be set multiple times.
+
+  -var-file=foo       Set variables in the Terraform configuration from
+                      a file. If "terraform.tfvars" or any ".auto.tfvars"
+                      files are present, they will be automatically loaded.
+
+Other Options:
+
+  -compact-warnings   If Terraform produces any warnings that are not
+                      accompanied by errors, show them in a more compact form
+                      that includes only the summary messages.
+
+  -detailed-exitcode  Return detailed exit codes when the command exits. This
+                      will change the meaning of exit codes to:
+                      0 - Succeeded, diff is empty (no changes)
+                      1 - Errored
+                      2 - Succeeded, there is a diff
+
+  -input=true         Ask for input for variables if not directly set.
+
+  -lock=true          Lock the state file when locking is supported.
+
+  -lock-timeout=0s    Duration to retry a state lock.
+
+  -no-color           If specified, output won't contain any color.
+
+  -out=path           Write a plan file to the given path. This can be used as
+                      input to the "apply" command.
+
+  -parallelism=n      Limit the number of concurrent operations. Defaults to 10.
+
+  -state=statefile    A legacy option used for the local backend only. See the
+                      local backend's documentation for more information.
+root@ip-172-31-2-36:~# aws configure
+AWS Access Key ID [****************FIMW]: AKIAU5EFZ3FWFAFDFIMW
+AWS Secret Access Key [****************T04e]: dX4E1oNCwxe9L90IRCmgkqxeI6hQHPHQhG              wlT04e
+Default region name [None]:
+Default output format [None]:
+root@ip-172-31-2-36:~# mkdir terraform-aws-instance
+root@ip-172-31-2-36:~# cd terraform-aws-instance
+root@ip-172-31-2-36:~/terraform-aws-instance# nano main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# nano main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform init
+There are some problems with the configuration, described below.
+
+The Terraform configuration must be valid before initialization so that
+Terraform can determine which modules and providers need to be installed.
+╷
+│ Error: Unsupported block type
+│
+│   on main.tf line 2, in terraform:
+│    2:   required_provider {
+│
+│ Blocks of type "required_provider" are not expected here. Did you mean
+│ "required_providers"?
+╵
+
+╷
+│ Error: Missing attribute value
+│
+│   on main.tf line 5, in terraform:
+│    3:     aws = {
+│    4:       source = "hashisor/aws"
+│    5:       version - "~> 3.27"
+│    6: }
+│
+│ Expected an attribute value, introduced by an equals sign ("=").
+╵
+
+╷
+│ Error: Unsupported argument
+│
+│   on main.tf line 9, in terraform:
+│    9: requred_version = ">= 0.14.9"
+│
+│ An argument named "requred_version" is not expected here. Did you mean
+│ "required_version"?
+╵
+
+root@ip-172-31-2-36:~/terraform-aws-instance# nano main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform init
+There are some problems with the configuration, described below.
+
+The Terraform configuration must be valid before initialization so that
+Terraform can determine which modules and providers need to be installed.
+╷
+│ Error: Unsupported block type
+│
+│   on main.tf line 2, in terraform:
+│    2:   required_provider {
+│
+│ Blocks of type "required_provider" are not expected here. Did you mean
+│ "required_providers"?
+╵
+
+╷
+│ Error: Missing attribute value
+│
+│   on main.tf line 5, in terraform:
+│    3:     aws = {
+│    4:       source = "hashicorp/aws"
+│    5:       version - "~> 3.27"
+│    6: }
+│
+│ Expected an attribute value, introduced by an equals sign ("=").
+╵
+
+root@ip-172-31-2-36:~/terraform-aws-instance# nano main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform init
+There are some problems with the configuration, described below.
+
+The Terraform configuration must be valid before initialization so that
+Terraform can determine which modules and providers need to be installed.
+╷
+│ Error: Unsupported block type
+│
+│   on main.tf line 2, in terraform:
+│    2:   required_provider {
+│
+│ Blocks of type "required_provider" are not expected here. Did you mean
+│ "required_providers"?
+╵
+
+root@ip-172-31-2-36:~/terraform-aws-instance# nano main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform init
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding hashicorp/aws versions matching "~> 3.27"...
+- Installing hashicorp/aws v3.39.0...
+- Installed hashicorp/aws v3.39.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform fmt
+main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform validate
+Success! The configuration is valid.
+
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform apply
+
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_instance.app_server will be created
+  + resource "aws_instance" "app_server" {
+      + ami                                  = "ami-830c94e3"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "Terraforminstance"
+        }
+      + tags_all                             = {
+          + "Name" = "Terraforminstance"
+        }
+      + tenancy                              = (known after apply)
+      + vpc_security_group_ids               = (known after apply)
+
+      + ebs_block_device {
+          + delete_on_termination = (known after apply)
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + snapshot_id           = (known after apply)
+          + tags                  = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = (known after apply)
+          + volume_type           = (known after apply)
+        }
+
+      + enclave_options {
+          + enabled = (known after apply)
+        }
+
+      + ephemeral_block_device {
+          + device_name  = (known after apply)
+          + no_device    = (known after apply)
+          + virtual_name = (known after apply)
+        }
+
+      + metadata_options {
+          + http_endpoint               = (known after apply)
+          + http_put_response_hop_limit = (known after apply)
+          + http_tokens                 = (known after apply)
+        }
+
+      + network_interface {
+          + delete_on_termination = (known after apply)
+          + device_index          = (known after apply)
+          + network_interface_id  = (known after apply)
+        }
+
+      + root_block_device {
+          + delete_on_termination = (known after apply)
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + tags                  = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = (known after apply)
+          + volume_type           = (known after apply)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.app_server: Creating...
+aws_instance.app_server: Still creating... [10s elapsed]
+aws_instance.app_server: Still creating... [20s elapsed]
+aws_instance.app_server: Still creating... [30s elapsed]
+aws_instance.app_server: Creation complete after 34s [id=i-0cb0bab64f8da2728]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+root@ip-172-31-2-36:~/terraform-aws-instance# terraform show
+# aws_instance.app_server:
+resource "aws_instance" "app_server" {
+    ami                                  = "ami-830c94e3"
+    arn                                  = "arn:aws:ec2:us-west-2:337435548012:i              nstance/i-0cb0bab64f8da2728"
+    associate_public_ip_address          = true
+    availability_zone                    = "us-west-2c"
+    cpu_core_count                       = 1
+    cpu_threads_per_core                 = 1
+    disable_api_termination              = false
+    ebs_optimized                        = false
+    get_password_data                    = false
+    hibernation                          = false
+    id                                   = "i-0cb0bab64f8da2728"
+    instance_initiated_shutdown_behavior = "stop"
+    instance_state                       = "running"
+    instance_type                        = "t2.micro"
+    ipv6_address_count                   = 0
+    ipv6_addresses                       = []
+    monitoring                           = false
+    primary_network_interface_id         = "eni-0801a2dcecb48b3da"
+    private_dns                          = "ip-172-31-3-152.us-west-2.compute.in              ternal"
+    private_ip                           = "172.31.3.152"
+    public_dns                           = "ec2-54-149-144-1.us-west-2.compute.a              mazonaws.com"
+    public_ip                            = "54.149.144.1"
+    secondary_private_ips                = []
+    security_groups                      = [
+        "default",
+    ]
+    source_dest_check                    = true
+    subnet_id                            = "subnet-8642d6db"
+    tags                                 = {
+        "Name" = "Terraforminstance"
+    }
+    tags_all                             = {
+        "Name" = "Terraforminstance"
+    }
+    tenancy                              = "default"
+    vpc_security_group_ids               = [
+        "sg-cd532ef2",
+    ]
+
+    credit_specification {
+        cpu_credits = "standard"
+    }
+
+    enclave_options {
+        enabled = false
+    }
+
+    metadata_options {
+        http_endpoint               = "enabled"
+        http_put_response_hop_limit = 1
+        http_tokens                 = "optional"
+    }
+
+    root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/sda1"
+        encrypted             = false
+        iops                  = 0
+        tags                  = {}
+        throughput            = 0
+        volume_id             = "vol-0aa8a3b2ea727b1bb"
+        volume_size           = 8
+        volume_type           = "standard"
+    }
+}
+root@ip-172-31-2-36:~/terraform-aws-instance# aws instances
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+aws: error: argument command: Invalid choice, valid choices are:
+
+accessanalyzer                           | acm
+acm-pca                                  | alexaforbusiness
+amplify                                  | apigateway
+apigatewaymanagementapi                  | apigatewayv2
+appconfig                                | application-autoscaling
+application-insights                     | appmesh
+appstream                                | appsync
+athena                                   | autoscaling
+autoscaling-plans                        | backup
+batch                                    | budgets
+ce                                       | chime
+cloud9                                   | clouddirectory
+cloudformation                           | cloudfront
+cloudhsm                                 | cloudhsmv2
+cloudsearch                              | cloudsearchdomain
+cloudtrail                               | cloudwatch
+codebuild                                | codecommit
+codeguru-reviewer                        | codeguruprofiler
+codepipeline                             | codestar
+codestar-connections                     | codestar-notifications
+cognito-identity                         | cognito-idp
+cognito-sync                             | comprehend
+comprehendmedical                        | compute-optimizer
+connect                                  | connectparticipant
+cur                                      | dataexchange
+datapipeline                             | datasync
+dax                                      | detective
+devicefarm                               | directconnect
+discovery                                | dlm
+dms                                      | docdb
+ds                                       | dynamodb
+dynamodbstreams                          | ebs
+ec2                                      | ec2-instance-connect
+ecr                                      | ecs
+efs                                      | eks
+elastic-inference                        | elasticache
+elasticbeanstalk                         | elastictranscoder
+elb                                      | elbv2
+emr                                      | es
+events                                   | firehose
+fms                                      | forecast
+forecastquery                            | frauddetector
+fsx                                      | gamelift
+glacier                                  | globalaccelerator
+glue                                     | greengrass
+groundstation                            | guardduty
+health                                   | iam
+imagebuilder                             | importexport
+inspector                                | iot
+iot-data                                 | iot-jobs-data
+iot1click-devices                        | iot1click-projects
+iotanalytics                             | iotevents
+iotevents-data                           | iotsecuretunneling
+iotsitewise                              | iotthingsgraph
+kafka                                    | kendra
+kinesis                                  | kinesis-video-archived-media
+kinesis-video-media                      | kinesis-video-signaling
+kinesisanalytics                         | kinesisanalyticsv2
+kinesisvideo                             | kms
+lakeformation                            | lambda
+lex-models                               | lex-runtime
+license-manager                          | lightsail
+logs                                     | machinelearning
+macie                                    | macie2
+managedblockchain                        | marketplace-catalog
+marketplace-entitlement                  | marketplacecommerceanalytics
+mediaconnect                             | mediaconvert
+medialive                                | mediapackage
+mediapackage-vod                         | mediastore
+mediastore-data                          | mediatailor
+meteringmarketplace                      | mgh
+migrationhub-config                      | mobile
+mq                                       | mturk
+neptune                                  | networkmanager
+opsworks                                 | opsworkscm
+organizations                            | outposts
+personalize                              | personalize-events
+personalize-runtime                      | pi
+pinpoint                                 | pinpoint-email
+pinpoint-sms-voice                       | polly
+pricing                                  | qldb
+qldb-session                             | quicksight
+ram                                      | rds
+rds-data                                 | redshift
+rekognition                              | resource-groups
+resourcegroupstaggingapi                 | robomaker
+route53                                  | route53domains
+route53resolver                          | s3control
+sagemaker                                | sagemaker-a2i-runtime
+sagemaker-runtime                        | savingsplans
+schemas                                  | sdb
+secretsmanager                           | securityhub
+serverlessrepo                           | service-quotas
+servicecatalog                           | servicediscovery
+ses                                      | sesv2
+shield                                   | signer
+sms                                      | sms-voice
+snowball                                 | sns
+sqs                                      | ssm
+sso                                      | sso-oidc
+stepfunctions                            | storagegateway
+sts                                      | support
+swf                                      | synthetics
+textract                                 | transcribe
+transfer                                 | translate
+waf                                      | waf-regional
+wafv2                                    | workdocs
+worklink                                 | workmail
+workmailmessageflow                      | workspaces
+xray                                     | s3api
+s3                                       | configure
+deploy                                   | configservice
+opsworks-cm                              | runtime.sagemaker
+history                                  | help
+root@ip-172-31-2-36:~/terraform-aws-instance# aws ec2
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+aws: error: the following arguments are required: operation
+root@ip-172-31-2-36:~/terraform-aws-instance# aws ec2 list-instances
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+aws: error: argument operation: Invalid choice, valid choices are:
+
+accept-reserved-instances-exchange-quote | accept-transit-gateway-peering-attachment
+accept-transit-gateway-vpc-attachment    | accept-vpc-endpoint-connections
+accept-vpc-peering-connection            | advertise-byoip-cidr
+allocate-address                         | allocate-hosts
+apply-security-groups-to-client-vpn-target-network | assign-ipv6-addresses
+assign-private-ip-addresses              | associate-address
+associate-client-vpn-target-network      | associate-dhcp-options
+associate-iam-instance-profile           | associate-route-table
+associate-subnet-cidr-block              | associate-transit-gateway-multicast-domain
+associate-transit-gateway-route-table    | associate-vpc-cidr-block
+attach-classic-link-vpc                  | attach-internet-gateway
+attach-network-interface                 | attach-volume
+attach-vpn-gateway                       | authorize-client-vpn-ingress
+authorize-security-group-egress          | authorize-security-group-ingress
+bundle-instance                          | cancel-bundle-task
+cancel-capacity-reservation              | cancel-conversion-task
+cancel-export-task                       | cancel-import-task
+cancel-reserved-instances-listing        | cancel-spot-fleet-requests
+cancel-spot-instance-requests            | confirm-product-instance
+copy-fpga-image                          | copy-image
+copy-snapshot                            | create-capacity-reservation
+create-client-vpn-endpoint               | create-client-vpn-route
+create-customer-gateway                  | create-default-subnet
+create-default-vpc                       | create-dhcp-options
+create-egress-only-internet-gateway      | create-fleet
+create-flow-logs                         | create-fpga-image
+create-image                             | create-instance-export-task
+create-internet-gateway                  | create-key-pair
+create-launch-template                   | create-launch-template-version
+create-local-gateway-route               | create-local-gateway-route-table-vpc-association
+create-nat-gateway                       | create-network-acl
+create-network-acl-entry                 | create-network-interface
+create-network-interface-permission      | create-placement-group
+create-reserved-instances-listing        | create-route
+create-route-table                       | create-security-group
+create-snapshot                          | create-snapshots
+create-spot-datafeed-subscription        | create-subnet
+create-tags                              | create-traffic-mirror-filter
+create-traffic-mirror-filter-rule        | create-traffic-mirror-session
+create-traffic-mirror-target             | create-transit-gateway
+create-transit-gateway-multicast-domain  | create-transit-gateway-peering-attachment
+create-transit-gateway-route             | create-transit-gateway-route-table
+create-transit-gateway-vpc-attachment    | create-volume
+create-vpc                               | create-vpc-endpoint
+create-vpc-endpoint-connection-notification | create-vpc-endpoint-service-configuration
+create-vpc-peering-connection            | create-vpn-connection
+create-vpn-connection-route              | create-vpn-gateway
+delete-client-vpn-endpoint               | delete-client-vpn-route
+delete-customer-gateway                  | delete-dhcp-options
+delete-egress-only-internet-gateway      | delete-fleets
+delete-flow-logs                         | delete-fpga-image
+delete-internet-gateway                  | delete-key-pair
+delete-launch-template                   | delete-launch-template-versions
+delete-local-gateway-route               | delete-local-gateway-route-table-vpc-association
+delete-nat-gateway                       | delete-network-acl
+delete-network-acl-entry                 | delete-network-interface
+delete-network-interface-permission      | delete-placement-group
+delete-queued-reserved-instances         | delete-route
+delete-route-table                       | delete-security-group
+delete-snapshot                          | delete-spot-datafeed-subscription
+delete-subnet                            | delete-tags
+delete-traffic-mirror-filter             | delete-traffic-mirror-filter-rule
+delete-traffic-mirror-session            | delete-traffic-mirror-target
+delete-transit-gateway                   | delete-transit-gateway-multicast-domain
+delete-transit-gateway-peering-attachment | delete-transit-gateway-route
+delete-transit-gateway-route-table       | delete-transit-gateway-vpc-attachment
+delete-volume                            | delete-vpc
+delete-vpc-endpoint-connection-notifications | delete-vpc-endpoint-service-configurations
+delete-vpc-endpoints                     | delete-vpc-peering-connection
+delete-vpn-connection                    | delete-vpn-connection-route
+delete-vpn-gateway                       | deprovision-byoip-cidr
+deregister-image                         | deregister-instance-event-notification-attributes
+deregister-transit-gateway-multicast-group-members | deregister-transit-gateway-multicast-gro up-sources
+describe-account-attributes              | describe-addresses
+describe-aggregate-id-format             | describe-availability-zones
+describe-bundle-tasks                    | describe-byoip-cidrs
+describe-capacity-reservations           | describe-classic-link-instances
+describe-client-vpn-authorization-rules  | describe-client-vpn-connections
+describe-client-vpn-endpoints            | describe-client-vpn-routes
+describe-client-vpn-target-networks      | describe-coip-pools
+describe-conversion-tasks                | describe-customer-gateways
+describe-dhcp-options                    | describe-egress-only-internet-gateways
+describe-elastic-gpus                    | describe-export-image-tasks
+describe-export-tasks                    | describe-fast-snapshot-restores
+describe-fleet-history                   | describe-fleet-instances
+describe-fleets                          | describe-flow-logs
+describe-fpga-image-attribute            | describe-fpga-images
+describe-host-reservation-offerings      | describe-host-reservations
+describe-hosts                           | describe-iam-instance-profile-associations
+describe-id-format                       | describe-identity-id-format
+describe-image-attribute                 | describe-images
+describe-import-image-tasks              | describe-import-snapshot-tasks
+describe-instance-attribute              | describe-instance-credit-specifications
+describe-instance-event-notification-attributes | describe-instance-status
+describe-instance-type-offerings         | describe-instance-types
+describe-instances                       | describe-internet-gateways
+describe-ipv6-pools                      | describe-key-pairs
+describe-launch-template-versions        | describe-launch-templates
+describe-local-gateway-route-table-virtual-interface-group-associations | describe-local-gate way-route-table-vpc-associations
+describe-local-gateway-route-tables      | describe-local-gateway-virtual-interface-groups
+describe-local-gateway-virtual-interfaces | describe-local-gateways
+describe-moving-addresses                | describe-nat-gateways
+describe-network-acls                    | describe-network-interface-attribute
+describe-network-interface-permissions   | describe-network-interfaces
+describe-placement-groups                | describe-prefix-lists
+describe-principal-id-format             | describe-public-ipv4-pools
+describe-regions                         | describe-reserved-instances
+describe-reserved-instances-listings     | describe-reserved-instances-modifications
+describe-reserved-instances-offerings    | describe-route-tables
+describe-scheduled-instance-availability | describe-scheduled-instances
+describe-security-group-references       | describe-security-groups
+describe-snapshot-attribute              | describe-snapshots
+describe-spot-datafeed-subscription      | describe-spot-fleet-instances
+describe-spot-fleet-request-history      | describe-spot-fleet-requests
+describe-spot-instance-requests          | describe-spot-price-history
+describe-stale-security-groups           | describe-subnets
+describe-tags                            | describe-traffic-mirror-filters
+describe-traffic-mirror-sessions         | describe-traffic-mirror-targets
+describe-transit-gateway-attachments     | describe-transit-gateway-multicast-domains
+describe-transit-gateway-peering-attachments | describe-transit-gateway-route-tables
+describe-transit-gateway-vpc-attachments | describe-transit-gateways
+describe-volume-attribute                | describe-volume-status
+describe-volumes                         | describe-volumes-modifications
+describe-vpc-attribute                   | describe-vpc-classic-link
+describe-vpc-classic-link-dns-support    | describe-vpc-endpoint-connection-notifications
+describe-vpc-endpoint-connections        | describe-vpc-endpoint-service-configurations
+describe-vpc-endpoint-service-permissions | describe-vpc-endpoint-services
+describe-vpc-endpoints                   | describe-vpc-peering-connections
+describe-vpcs                            | describe-vpn-connections
+describe-vpn-gateways                    | detach-classic-link-vpc
+detach-internet-gateway                  | detach-network-interface
+detach-volume                            | detach-vpn-gateway
+disable-ebs-encryption-by-default        | disable-fast-snapshot-restores
+disable-transit-gateway-route-table-propagation | disable-vgw-route-propagation
+disable-vpc-classic-link                 | disable-vpc-classic-link-dns-support
+disassociate-address                     | disassociate-client-vpn-target-network
+disassociate-iam-instance-profile        | disassociate-route-table
+disassociate-subnet-cidr-block           | disassociate-transit-gateway-multicast-domain
+disassociate-transit-gateway-route-table | disassociate-vpc-cidr-block
+enable-ebs-encryption-by-default         | enable-fast-snapshot-restores
+enable-transit-gateway-route-table-propagation | enable-vgw-route-propagation
+enable-volume-io                         | enable-vpc-classic-link
+enable-vpc-classic-link-dns-support      | export-client-vpn-client-certificate-revocation-li st
+export-client-vpn-client-configuration   | export-image
+export-transit-gateway-routes            | get-associated-ipv6-pool-cidrs
+get-capacity-reservation-usage           | get-coip-pool-usage
+get-console-output                       | get-console-screenshot
+get-default-credit-specification         | get-ebs-default-kms-key-id
+get-ebs-encryption-by-default            | get-host-reservation-purchase-preview
+get-launch-template-data                 | get-password-data
+get-reserved-instances-exchange-quote    | get-transit-gateway-attachment-propagations
+get-transit-gateway-multicast-domain-associations | get-transit-gateway-route-table-associati ons
+get-transit-gateway-route-table-propagations | import-client-vpn-client-certificate-revocatio n-list
+import-image                             | import-key-pair
+import-snapshot                          | modify-availability-zone-group
+modify-capacity-reservation              | modify-client-vpn-endpoint
+modify-default-credit-specification      | modify-ebs-default-kms-key-id
+modify-fleet                             | modify-fpga-image-attribute
+modify-hosts                             | modify-id-format
+modify-identity-id-format                | modify-image-attribute
+modify-instance-attribute                | modify-instance-capacity-reservation-attributes
+modify-instance-credit-specification     | modify-instance-event-start-time
+modify-instance-metadata-options         | modify-instance-placement
+modify-launch-template                   | modify-network-interface-attribute
+modify-reserved-instances                | modify-snapshot-attribute
+modify-spot-fleet-request                | modify-subnet-attribute
+modify-traffic-mirror-filter-network-services | modify-traffic-mirror-filter-rule
+modify-traffic-mirror-session            | modify-transit-gateway-vpc-attachment
+modify-volume                            | modify-volume-attribute
+modify-vpc-attribute                     | modify-vpc-endpoint
+modify-vpc-endpoint-connection-notification | modify-vpc-endpoint-service-configuration
+modify-vpc-endpoint-service-permissions  | modify-vpc-peering-connection-options
+modify-vpc-tenancy                       | modify-vpn-connection
+modify-vpn-tunnel-certificate            | modify-vpn-tunnel-options
+monitor-instances                        | move-address-to-vpc
+provision-byoip-cidr                     | purchase-host-reservation
+purchase-reserved-instances-offering     | purchase-scheduled-instances
+reboot-instances                         | register-image
+register-instance-event-notification-attributes | register-transit-gateway-multicast-group-me mbers
+register-transit-gateway-multicast-group-sources | reject-transit-gateway-peering-attachment
+reject-transit-gateway-vpc-attachment    | reject-vpc-endpoint-connections
+reject-vpc-peering-connection            | release-address
+release-hosts                            | replace-iam-instance-profile-association
+replace-network-acl-association          | replace-network-acl-entry
+replace-route                            | replace-route-table-association
+replace-transit-gateway-route            | report-instance-status
+request-spot-fleet                       | request-spot-instances
+reset-ebs-default-kms-key-id             | reset-fpga-image-attribute
+reset-image-attribute                    | reset-instance-attribute
+reset-network-interface-attribute        | reset-snapshot-attribute
+restore-address-to-classic               | revoke-client-vpn-ingress
+revoke-security-group-egress             | revoke-security-group-ingress
+run-instances                            | run-scheduled-instances
+search-local-gateway-routes              | search-transit-gateway-multicast-groups
+search-transit-gateway-routes            | send-diagnostic-interrupt
+start-instances                          | start-vpc-endpoint-service-private-dns-verificatio n
+stop-instances                           | terminate-client-vpn-connections
+terminate-instances                      | unassign-ipv6-addresses
+unassign-private-ip-addresses            | unmonitor-instances
+update-security-group-rule-descriptions-egress | update-security-group-rule-descriptions-ingr ess
+withdraw-byoip-cidr                      | wait
+help
+
+
+Invalid choice: 'list-instances', maybe you meant:
+
+  * stop-instances
+  * start-instances
+root@ip-172-31-2-36:~/terraform-aws-instance#  region  = "us-west-2"}
+region: command not found
+root@ip-172-31-2-36:~/terraform-aws-instance#
+root@ip-172-31-2-36:~/terraform-aws-instance# resource "aws_instance" "app_server" {
+
+Command 'resource' not found, did you mean:
+
+  command 'gresource' from deb libglib2.0-bin (2.64.6-1~ubuntu20.04.3)
+
+Try: apt install <deb name>
+
+root@ip-172-31-2-36:~/terraform-aws-instance#   ami           = "ami-830c94e3"
+
+Command 'ami' not found, did you mean:
+
+  command 'jami' from snap jami (20210105.1.11fbc49)
+  command 'axi' from deb afnix (2.9.2-2build1)
+  command 'mi' from deb libxgks-dev (2.6.1+dfsg.2-5build2)
+  command 'amin' from deb orville-write (2.55-3build1)
+  command 'ali' from deb mailutils-mh (1:3.7-2.1)
+  command 'ali' from deb mmh (0.4-2)
+  command 'ali' from deb nmh (1.7.1-6)
+  command 'pmi' from deb powermanagement-interface (0.3.21)
+  command 'smi' from deb scmxx (0.9.0-2.4)
+  command 'amd' from deb am-utils (6.2+rc20110530-3.2ubuntu2)
+  command 'amq' from deb am-utils (6.2+rc20110530-3.2ubuntu2)
+  command 'gmi' from deb gmailieer (0.10-1)
+  command 'ams' from deb ams (2.1.2-1build1)
+  command 'amr' from deb acr (1.7.2-1)
+
+See 'snap info <snapname>' for additional versions.
+
+root@ip-172-31-2-36:~/terraform-aws-instance#   instance_type = "t2.micro"
+instance_type: command not found
+root@ip-172-31-2-36:~/terraform-aws-instance#
+root@ip-172-31-2-36:~/terraform-aws-instance#   tags = {
+
+Command 'tags' not found, did you mean:
+
+  command 'ctags' from snap universal-ctags (0.2020-12-06+06:23:59+695257b0)
+  command 'ags' from snap ags (3.4.3.1)
+  command 'jags' from deb jags (4.3.0-3build1)
+  command 'tabs' from deb ncurses-bin (6.2-0ubuntu2)
+  command 'ctags' from deb exuberant-ctags (1:5.9~svn20110310-12)
+  command 'ctags' from deb universal-ctags (0+git20181215-2)
+  command 'pags' from deb heimdal-clients (7.7.0+dfsg-1ubuntu1)
+  command 'otags' from deb otags (4.05.1-1)
+  command 'gtags' from deb global (6.6.4-1)
+  command 'etags' from deb exuberant-ctags (1:5.9~svn20110310-12)
+  command 'etags' from deb xemacs21-bin (21.4.24-9)
+  command 'htags' from deb global (6.6.4-1)
+
+See 'snap info <snapname>' for additional versions.
+
+root@ip-172-31-2-36:~/terraform-aws-instance#     Name = "Terraforminstance"
+
+Command 'Name' not found, did you mean:
+
+  command 'mame' from deb mame (0.220+dfsg.1-1)
+  command 'lame' from deb lame (3.100-3)
+
+Try: apt install <deb name>
+
+root@ip-172-31-2-36:~/terraform-aws-instance#   }
+-bash: syntax error near unexpected token `}'
+root@ip-172-31-2-36:~/terraform-aws-instance# }
+-bash: syntax error near unexpected token `}'
+root@ip-172-31-2-36:~/terraform-aws-instance# git --version
+git version 2.25.1
+root@ip-172-31-2-36:~/terraform-aws-instance# git add main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# git commit -m "terraform infra"
+[master 14eced9] terraform infra
+ 1 file changed, 26 insertions(+)
+ create mode 100644 terraform-aws-instance/main.tf
+root@ip-172-31-2-36:~/terraform-aws-instance# git push origin master
+Username for 'https://github.com': priyankasanam
+Password for 'https://priyankasanam@github.com':
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 555 bytes | 555.00 KiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0)
+To https://github.com/priyankasanam/TFtasks.git
+   f4a84b9..14eced9  master -> master
