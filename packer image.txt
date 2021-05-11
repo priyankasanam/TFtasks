@@ -1,0 +1,259 @@
+root@ip-172-31-2-36:~# wget "https://releases.hashicorp.com/packer/1.7.2/packer_1.7.2_linux_ad64.zip"
+--2021-05-11 07:43:20--  https://releases.hashicorp.com/packer/1.7.2/packer_1.7.2_linux_amd64zip
+Resolving releases.hashicorp.com (releases.hashicorp.com)... 151.101.201.183, 2a04:4e42:2f::49
+Connecting to releases.hashicorp.com (releases.hashicorp.com)|151.101.201.183|:443... connectd.
+HTTP request sent, awaiting response... 200 OK
+Length: 28738303 (27M) [application/zip]
+Saving to: ‘packer_1.7.2_linux_amd64.zip’
+
+packer_1.7.2_linux_amd6 100%[=============================>]  27.41M  38.6MB/s    in 0.7s
+
+2021-05-11 07:43:20 (38.6 MB/s) - ‘packer_1.7.2_linux_amd64.zip’ saved [28738303/28738303]
+
+root@ip-172-31-2-36:~# unzip "^C
+root@ip-172-31-2-36:~# unzip "packer_1.7.2_linux_amd64.zip"
+Archive:  packer_1.7.2_linux_amd64.zip
+  inflating: packer
+root@ip-172-31-2-36:~# ls
+packer                        terraform-aws-instance            usercreate.sh
+packer_1.7.2_linux_amd64.zip  terraform_0.15.3_linux_amd64.zip
+snap                          usercreate
+root@ip-172-31-2-36:~# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/sna/bin
+root@ip-172-31-2-36:~# mv mv
+mv: missing destination file operand after 'mv'
+Try 'mv --help' for more information.
+root@ip-172-31-2-36:~# mv
+mv: missing file operand
+Try 'mv --help' for more information.
+root@ip-172-31-2-36:~# mv packer /usr/local/bin/
+root@ip-172-31-2-36:~# packer
+Usage: packer [--version] [--help] <command> [<args>]
+
+Available commands are:
+    build           build image(s) from template
+    console         creates a console for testing variable interpolation
+    fix             fixes templates from old versions of packer
+    fmt             Rewrites HCL2 config files to canonical format
+    hcl2_upgrade    transform a JSON template into an HCL2 configuration
+    init            Install missing plugins or upgrade plugins
+    inspect         see components of a template
+    validate        check that a template is valid
+    version         Prints the Packer version
+
+root@ip-172-31-2-36:~# mkdir packer_build
+root@ip-172-31-2-36:~# cd packer_build/
+root@ip-172-31-2-36:~/packer_build# nano aws-ubuntu.pkr.hcl
+root@ip-172-31-2-36:~/packer_build# export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
+root@ip-172-31-2-36:~/packer_build# export AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
+root@ip-172-31-2-36:~/packer_build# packer init
+Usage: packer init [options] [config.pkr.hcl|folder/]
+
+  Install all the missing plugins required in a Packer config. Note that Packer
+  does not have a state.
+
+  This is the first command that should be executed when working with a new
+  or existing template.
+
+  This command is always safe to run multiple times. Though subsequent runs may
+  give errors, this command will never delete anything.
+
+Options:
+  -upgrade                     On top of installing missing plugins, update
+                               installed plugins to the latest available
+                               version, if there is a new higher one. Note that
+                               this still takes into consideration the version
+                               constraint of the config.
+root@ip-172-31-2-36:~/packer_build# packer fmt .
+root@ip-172-31-2-36:~/packer_build# ls
+aws-ubuntu.pkr.hcl
+root@ip-172-31-2-36:~/packer_build# packer validate .
+Error: no plugin installed for github.com/hashicorp/amazon >= 0.0.1
+
+Did you run packer init for this project ?
+
+
+root@ip-172-31-2-36:~/packer_build# packer init
+Usage: packer init [options] [config.pkr.hcl|folder/]
+
+  Install all the missing plugins required in a Packer config. Note that Packer
+  does not have a state.
+
+  This is the first command that should be executed when working with a new
+  or existing template.
+
+  This command is always safe to run multiple times. Though subsequent runs may
+  give errors, this command will never delete anything.
+
+Options:
+  -upgrade                     On top of installing missing plugins, update
+                               installed plugins to the latest available
+                               version, if there is a new higher one. Note that
+                               this still takes into consideration the version
+                               constraint of the config.
+root@ip-172-31-2-36:~/packer_build# apt-get update
+Hit:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal InRelease
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu focal-backports InRelease [101 kB]
+Get:4 http://security.ubuntu.com/ubuntu focal-security InRelease [109 kB]
+Fetched 324 kB in 0s (847 kB/s)
+Reading package lists... Done
+root@ip-172-31-2-36:~/packer_build# apt-get install ami-builder
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package ami-builder
+root@ip-172-31-2-36:~/packer_build# packer init
+Usage: packer init [options] [config.pkr.hcl|folder/]
+
+  Install all the missing plugins required in a Packer config. Note that Packer
+  does not have a state.
+
+  This is the first command that should be executed when working with a new
+  or existing template.
+
+  This command is always safe to run multiple times. Though subsequent runs may
+  give errors, this command will never delete anything.
+
+Options:
+  -upgrade                     On top of installing missing plugins, update
+                               installed plugins to the latest available
+                               version, if there is a new higher one. Note that
+                               this still takes into consideration the version
+                               constraint of the config.
+root@ip-172-31-2-36:~/packer_build# nano aws-ubuntu.pkr.hcl
+root@ip-172-31-2-36:~/packer_build# export AWS_ACCESS_KEY=AKIAU5EFZ3FWFAFDFIMW
+root@ip-172-31-2-36:~/packer_build# export AWS_SECRECT_KEY=dX4E1oNCwxe9L90IRCmgkqxeI6hQHPHQhGwlT04e
+root@ip-172-31-2-36:~/packer_build# packer init                                              Usage: packer init [options] [config.pkr.hcl|folder/]
+
+  Install all the missing plugins required in a Packer config. Note that Packer
+  does not have a state.
+
+  This is the first command that should be executed when working with a new
+  or existing template.
+
+  This command is always safe to run multiple times. Though subsequent runs may
+  give errors, this command will never delete anything.
+
+Options:
+  -upgrade                     On top of installing missing plugins, update
+                               installed plugins to the latest available
+                               version, if there is a new higher one. Note that
+                               this still takes into consideration the version
+                               constraint of the config.
+root@ip-172-31-2-36:~/packer_build# packer init .
+Installed plugin github.com/hashicorp/amazon v0.0.1 in "/root/.packer.d/plugins/github.com/hashicorp/amazon/packer-plugin-amazon_v0.0.1_x5.0_linux_amd64"
+root@ip-172-31-2-36:~/packer_build# packer validate .
+root@ip-172-31-2-36:~/packer_build# ls
+aws-ubuntu.pkr.hcl
+root@ip-172-31-2-36:~/packer_build# packer build aws-ubuntu.pkr.hcl
+amazon-ebs.ubuntu: output will be in this color.
+
+Build 'amazon-ebs.ubuntu' errored after 249 milliseconds 554 microseconds: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 5e08df2f-9847-43c3-b667-d5c8da1195b8
+
+==> Wait completed after 249 milliseconds 607 microseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> amazon-ebs.ubuntu: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 5e08df2f-9847-43c3-b667-d5c8da1195b8
+
+==> Builds finished but no artifacts were created.
+root@ip-172-31-2-36:~/packer_build# nano aws-ubuntu.pkr.hcl                                  root@ip-172-31-2-36:~/packer_build# packer build aws-ubuntu.pkr.hcl
+amazon-ebs.ubuntu: output will be in this color.
+
+Build 'amazon-ebs.ubuntu' errored after 55 milliseconds 69 microseconds: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 5ac5a28e-1de0-4eeb-830d-2569f6b135a5
+
+==> Wait completed after 55 milliseconds 119 microseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> amazon-ebs.ubuntu: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 5ac5a28e-1de0-4eeb-830d-2569f6b135a5
+
+==> Builds finished but no artifacts were created.
+root@ip-172-31-2-36:~/packer_build# packer validate .
+root@ip-172-31-2-36:~/packer_build# packer init .
+root@ip-172-31-2-36:~/packer_build# packer build aws-ubuntu.pkr.hcl
+amazon-ebs.ubuntu: output will be in this color.
+
+Build 'amazon-ebs.ubuntu' errored after 52 milliseconds 234 microseconds: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 37ba9d77-56b5-447f-9fb8-f88ba0115c6a
+
+==> Wait completed after 52 milliseconds 286 microseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> amazon-ebs.ubuntu: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 37ba9d77-56b5-447f-9fb8-f88ba0115c6a
+
+==> Builds finished but no artifacts were created.
+root@ip-172-31-2-36:~/packer_build# export AWS_ACCESS_KEY=AKIAU5EFZ3FWFAFDFIMW
+root@ip-172-31-2-36:~/packer_build# export AWS_SECRECT_KEY=dX4E1oNCwxe9L90IRCmgkqxeI6hQHPHQhGwlT04e
+root@ip-172-31-2-36:~/packer_build# packer build aws-ubuntu.pkr.hcl                          amazon-ebs.ubuntu: output will be in this color.
+
+Build 'amazon-ebs.ubuntu' errored after 112 milliseconds 545 microseconds: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: d6a72093-be9a-40ce-80b4-79e4e9c5c7bb
+
+==> Wait completed after 112 milliseconds 630 microseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> amazon-ebs.ubuntu: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: d6a72093-be9a-40ce-80b4-79e4e9c5c7bb
+
+==> Builds finished but no artifacts were created.
+root@ip-172-31-2-36:~/packer_build# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+root@ip-172-31-2-36:~/packer_build# export AWS_ACCESS_KEY="AKIAU5EFZ3FWFAFDFIMW"             root@ip-172-31-2-36:~/packer_build# export AWS_SECRECT_KEY="dX4E1oNCwxe9L90IRCmgkqxeI6hQHPHQhGwlT04e"
+root@ip-172-31-2-36:~/packer_build# packer build aws-ubuntu.pkr.hcl
+amazon-ebs.ubuntu: output will be in this color.
+
+Build 'amazon-ebs.ubuntu' errored after 55 milliseconds 939 microseconds: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 9bb94ad3-b6e6-4f83-be9c-969ec5b8e405
+
+==> Wait completed after 55 milliseconds 984 microseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> amazon-ebs.ubuntu: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 9bb94ad3-b6e6-4f83-be9c-969ec5b8e405
+
+==> Builds finished but no artifacts were created.
+root@ip-172-31-2-36:~/packer_build# packer init .
+root@ip-172-31-2-36:~/packer_build# packer build aws-ubuntu.pkr.hcl
+amazon-ebs.ubuntu: output will be in this color.
+
+Build 'amazon-ebs.ubuntu' errored after 51 milliseconds 726 microseconds: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 18a7296b-8e10-433d-892c-88296fe72825
+
+==> Wait completed after 51 milliseconds 772 microseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> amazon-ebs.ubuntu: error validating regions: AuthFailure: AWS was not able to validate the provided access credentials
+        status code: 401, request id: 18a7296b-8e10-433d-892c-88296fe72825
+
+==> Builds finished but no artifacts were created.
+root@ip-172-31-2-36:~/packer_build# git add aws-ubuntu.pkr.hcl
+root@ip-172-31-2-36:~/packer_build# git commit aws-ubuntu.pkr.hcl
+Aborting commit due to empty commit message.
+root@ip-172-31-2-36:~/packer_build# git commit -m "image -packer"
+[master bd3cae8] image -packer
+ 1 file changed, 30 insertions(+)
+ create mode 100644 packer_build/aws-ubuntu.pkr.hcl
+root@ip-172-31-2-36:~/packer_build# git push origin main
+error: src refspec main does not match any
+error: failed to push some refs to 'https://github.com/priyankasanam/TFtasks.git'
+root@ip-172-31-2-36:~/packer_build# git checkout main
+error: pathspec 'main' did not match any file(s) known to git
+root@ip-172-31-2-36:~/packer_build# git push origin main
+error: src refspec main does not match any
+error: failed to push some refs to 'https://github.com/priyankasanam/TFtasks.git'
+root@ip-172-31-2-36:~/packer_build# git push origin master
+Username for 'https://github.com': priyankasanam
+Password for 'https://priyankasanam@github.com':
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 713 bytes | 713.00 KiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0)
+To https://github.com/priyankasanam/TFtasks.git
+   14eced9..bd3cae8  master -> master
+root@ip-172-31-2-36:~/packer_build#
