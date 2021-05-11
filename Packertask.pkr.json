@@ -1,0 +1,33 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+   },
+   
+   "builders": [
+     {
+       "type": "amazon-ebs",
+       "access_key": "{{user 'aws_access_key'}}",
+       "secret_key": "{{user 'aws_secret_key'}}",
+       "region": "us-east-2",
+       "source_ami": "ami-0568d9d8a0cec1703",
+       "instance_type": "t2.micro",
+       "ssh_username": "ubuntu",
+       "ami_name": "Packer_build"
+      }
+   ],
+   "provisioners": [
+      {
+        "type": "shell",
+        "inline": [
+          "sudo wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo            apt-key add -",
+	  "sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
+           /etc/apt/sources.list.d/jenkins.list'",
+	  "sudo apt-get update",
+	  "sudo apt-get -y install openjdk-8-jdk",
+          "sudo apt-get -y install jenkins",
+	  "sudo systemctl start jenkins"
+	  ]
+       }
+   ]
+}
